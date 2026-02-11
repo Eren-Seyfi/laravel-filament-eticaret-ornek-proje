@@ -1,0 +1,537 @@
+@source '../../vendor/laravel/framework/src/Illuminate/Pagination/resources/views/*.blade.php';
+@source '../../storage/framework/views/*.php';
+@source '../**/*.blade.php';
+@source '../**/*.js';
+
+/* =========================
+   THEME TOKENS (KEEP)
+   ========================= */
+:root {
+    --accent: #16c784;
+    --accent-2: #00d4ff;
+    --accent-warn: #f6c343;
+
+    /* ✅ hex -> rgb token (blob/opacity için) */
+    --accent-rgb: 22 199 132;
+    --accent-2-rgb: 0 212 255;
+    --accent-warn-rgb: 246 195 67;
+
+    --app-bg-1: #f6f7fb;
+    --app-bg-2: #ffffff;
+
+    --surface-bg: rgba(255, 255, 255, 0.62);
+    --surface-border: rgba(0, 0, 0, 0.06);
+
+    --focus-ring: 0 0 0 0.25rem rgba(0, 212, 255, 0.22);
+}
+
+[data-bs-theme="dark"] {
+    --app-bg-1: #070b12;
+    --app-bg-2: #0b1220;
+
+    --surface-bg: rgba(255, 255, 255, 0.045);
+    --surface-border: rgba(255, 255, 255, 0.08);
+
+    /* istersen aynı rgb kalır; tema rengi değişmiyorsa dokunma */
+}
+
+/* =========================
+   BACKGROUND
+   ========================= */
+
+body.app-theme-bg {
+    background:
+        radial-gradient(
+            820px 540px at 10% 12%,
+            rgb(var(--accent-rgb) / 0.22),
+            transparent 62%
+        ),
+        radial-gradient(
+            800px 540px at 86% 10%,
+            rgb(var(--accent-2-rgb) / 0.2),
+            transparent 60%
+        ),
+        radial-gradient(
+            740px 540px at 18% 80%,
+            rgb(var(--accent-warn-rgb) / 0.16),
+            transparent 62%
+        ),
+        radial-gradient(
+            700px 500px at 92% 78%,
+            rgb(var(--accent-rgb) / 0.14),
+            transparent 60%
+        ),
+        radial-gradient(
+            560px 440px at 42% 22%,
+            rgb(var(--accent-2-rgb) / 0.12),
+            transparent 60%
+        ),
+        radial-gradient(
+            560px 440px at 58% 55%,
+            rgb(var(--accent-rgb) / 0.12),
+            transparent 62%
+        ),
+        radial-gradient(
+            520px 420px at 28% 45%,
+            rgb(var(--accent-2-rgb) / 0.1),
+            transparent 62%
+        ),
+        radial-gradient(
+            500px 400px at 72% 40%,
+            rgb(var(--accent-warn-rgb) / 0.1),
+            transparent 62%
+        ),
+        linear-gradient(180deg, var(--app-bg-1), var(--app-bg-2));
+
+    background-repeat: no-repeat;
+    background-attachment: scroll;
+
+    background-size:
+        130% 130%,
+        130% 130%,
+        140% 140%,
+        140% 140%,
+        160% 160%,
+        170% 170%,
+        180% 180%,
+        190% 190%,
+        100% 100%;
+
+    will-change: background-position;
+    animation: appBgDriftPro 22s ease-in-out infinite alternate;
+}
+
+/* Dark theme: aynı renkler ama biraz daha “glow” (opacity artar) */
+[data-bs-theme="dark"] body.app-theme-bg {
+    background:
+        radial-gradient(
+            900px 580px at 10% 12%,
+            rgb(var(--accent-rgb) / 0.28),
+            transparent 62%
+        ),
+        radial-gradient(
+            880px 580px at 86% 10%,
+            rgb(var(--accent-2-rgb) / 0.24),
+            transparent 60%
+        ),
+        radial-gradient(
+            840px 580px at 18% 80%,
+            rgb(var(--accent-warn-rgb) / 0.18),
+            transparent 62%
+        ),
+        radial-gradient(
+            800px 540px at 92% 78%,
+            rgb(var(--accent-rgb) / 0.16),
+            transparent 60%
+        ),
+        radial-gradient(
+            640px 520px at 42% 22%,
+            rgb(var(--accent-2-rgb) / 0.14),
+            transparent 60%
+        ),
+        radial-gradient(
+            640px 520px at 58% 55%,
+            rgb(var(--accent-rgb) / 0.14),
+            transparent 62%
+        ),
+        radial-gradient(
+            600px 480px at 28% 45%,
+            rgb(var(--accent-2-rgb) / 0.12),
+            transparent 62%
+        ),
+        radial-gradient(
+            560px 440px at 72% 40%,
+            rgb(var(--accent-warn-rgb) / 0.12),
+            transparent 62%
+        ),
+        linear-gradient(180deg, var(--app-bg-1), var(--app-bg-2));
+}
+
+
+/* =========================
+   HEADER / FOOTER SURFACE
+   ========================= */
+header.bg-body,
+header .bg-body,
+footer.bg-body,
+footer .bg-body {
+    background: var(--surface-bg) !important;
+    border-color: var(--surface-border) !important;
+    backdrop-filter: blur(10px);
+    -webkit-backdrop-filter: blur(10px);
+}
+
+header.border-bottom,
+header .border-bottom,
+header .border-top,
+footer.border-top,
+footer .border-top {
+    border-color: var(--surface-border) !important;
+}
+
+/* =========================
+   HEADER BUTTONS
+   ========================= */
+.nav-toggle-btn,
+.theme-btn {
+    width: 44px;
+    height: 44px;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    border-radius: 0.85rem;
+}
+
+/* focus */
+.nav-toggle-btn:focus,
+.theme-btn:focus,
+.nav-link:focus,
+.list-group-item:focus,
+.btn:focus {
+    outline: 0;
+    box-shadow: var(--focus-ring);
+}
+
+/* Header/footer outline-secondary uyumu */
+header .btn-outline-secondary,
+footer .btn-outline-secondary {
+    border-color: var(--surface-border);
+}
+
+@media (hover: hover) and (pointer: fine) {
+    header .btn-outline-secondary:hover,
+    footer .btn-outline-secondary:hover {
+        border-color: rgba(0, 212, 255, 0.35);
+        box-shadow: 0 0 0.9rem rgba(0, 212, 255, 0.15);
+    }
+}
+
+/* =========================
+   CATEGORY "CHIPS"
+   ========================= */
+.navbar-nav {
+    gap: 0.45rem;
+}
+
+.navbar-nav .nav-link {
+    border-radius: 999px;
+    padding: 0.6rem 1rem;
+
+    border: 1px solid var(--surface-border);
+    background: rgba(255, 255, 255, 0.35);
+
+    font-weight: 700;
+    line-height: 1;
+
+    display: inline-flex;
+    align-items: center;
+    gap: 0.55rem;
+
+    color: var(--bs-body-color);
+    text-decoration: none;
+
+    transition:
+        border-color 0.15s ease,
+        background-color 0.15s ease,
+        box-shadow 0.15s ease,
+        transform 0.15s ease;
+}
+
+[data-bs-theme="dark"] .navbar-nav .nav-link {
+    background: rgba(255, 255, 255, 0.06);
+    border-color: var(--surface-border);
+}
+
+@media (hover: hover) and (pointer: fine) {
+    .navbar-nav .nav-link:hover {
+        transform: translateY(-1px);
+        border-color: rgba(22, 199, 132, 0.45);
+        background: rgba(22, 199, 132, 0.1);
+        box-shadow: 0 0 0.9rem rgba(22, 199, 132, 0.12);
+        text-decoration: none;
+    }
+
+    [data-bs-theme="dark"] .navbar-nav .nav-link:hover {
+        border-color: rgba(22, 199, 132, 0.5);
+        background: rgba(22, 199, 132, 0.12);
+        box-shadow: 0 0 1rem rgba(22, 199, 132, 0.14);
+    }
+}
+
+/* Küçük vurgu noktası */
+.nav-dot {
+    width: 8px;
+    height: 8px;
+    border-radius: 999px;
+    background: var(--accent);
+    display: inline-block;
+    box-shadow: 0 0 0.7rem rgba(22, 199, 132, 0.25);
+}
+
+[data-bs-theme="dark"] .nav-dot {
+    box-shadow: 0 0 0.8rem rgba(22, 199, 132, 0.35);
+}
+
+/* =========================
+   OFFCANVAS
+   ========================= */
+.offcanvas {
+    background: var(--surface-bg) !important;
+    border-color: var(--surface-border) !important;
+    backdrop-filter: blur(10px);
+    -webkit-backdrop-filter: blur(10px);
+}
+
+.offcanvas .offcanvas-header {
+    border-bottom: 1px solid var(--surface-border);
+}
+
+.offcanvas .list-group-item {
+    border: 1px solid var(--surface-border) !important;
+    background: rgba(255, 255, 255, 0.35) !important;
+    color: var(--bs-body-color) !important;
+
+    border-radius: 0.9rem;
+    margin-bottom: 0.55rem;
+
+    transition:
+        border-color 0.15s ease,
+        background-color 0.15s ease,
+        box-shadow 0.15s ease,
+        transform 0.15s ease;
+}
+
+[data-bs-theme="dark"] .offcanvas .list-group-item {
+    background: rgba(255, 255, 255, 0.06) !important;
+}
+
+@media (hover: hover) and (pointer: fine) {
+    .offcanvas .list-group-item:hover {
+        transform: translateY(-1px);
+        border-color: rgba(22, 199, 132, 0.45) !important;
+        background: rgba(22, 199, 132, 0.1) !important;
+        box-shadow: 0 0 0.9rem rgba(22, 199, 132, 0.12);
+    }
+
+    [data-bs-theme="dark"] .offcanvas .list-group-item:hover {
+        border-color: rgba(22, 199, 132, 0.5) !important;
+        background: rgba(22, 199, 132, 0.12) !important;
+        box-shadow: 0 0 1rem rgba(22, 199, 132, 0.14);
+    }
+}
+
+.offcanvas-backdrop.show {
+    opacity: 0.35;
+}
+
+/* Küçük ekranlarda üst bar taşmasın */
+header .container {
+    min-width: 0;
+}
+
+/* =========================
+   LIVEWIRE NAVIGATE: AKTİF LINK
+   ========================= */
+.navbar-nav .nav-link[data-current],
+.offcanvas .list-group-item[data-current],
+.offcanvas .list-group-item.active {
+    border-color: rgba(22, 199, 132, 0.65) !important;
+    background: rgba(22, 199, 132, 0.14) !important;
+    box-shadow: 0 0 0.9rem rgba(22, 199, 132, 0.14);
+}
+
+[data-bs-theme="dark"] .navbar-nav .nav-link[data-current],
+[data-bs-theme="dark"] .offcanvas .list-group-item[data-current],
+[data-bs-theme="dark"] .offcanvas .list-group-item.active {
+    border-color: rgba(22, 199, 132, 0.75) !important;
+    background: rgba(22, 199, 132, 0.18) !important;
+}
+
+/* =========================
+   SOCIAL ICON LINKS (tek tanım)
+   ========================= */
+.social-icon-link {
+    width: 44px;
+    height: 44px;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+
+    border-radius: 0.9rem;
+    text-decoration: none;
+
+    color: var(--bs-body-color);
+    background: transparent;
+    border: 0;
+
+    transition:
+        transform 0.15s ease,
+        background-color 0.15s ease,
+        box-shadow 0.15s ease,
+        color 0.15s ease;
+}
+
+.social-icon-link i {
+    font-size: 1.25rem;
+    line-height: 1;
+}
+
+@media (hover: hover) and (pointer: fine) {
+    .social-icon-link:hover {
+        transform: translateY(-1px);
+        background: rgba(0, 212, 255, 0.1);
+        box-shadow: 0 0 0.9rem rgba(0, 212, 255, 0.14);
+        color: var(--bs-body-color);
+    }
+
+    [data-bs-theme="dark"] .social-icon-link:hover {
+        background: rgba(0, 212, 255, 0.12);
+        box-shadow: 0 0 1rem rgba(0, 212, 255, 0.16);
+    }
+}
+
+.social-icon-link:focus {
+    outline: 0;
+    box-shadow: var(--focus-ring);
+}
+
+/* =========================
+   SIDEBAR STICKY
+   ========================= */
+.sidebar-sticky {
+    position: sticky;
+    top: 1rem;
+    height: calc(100svh - 1rem);
+}
+
+.advert-slot {
+    width: 100%;
+    height: 100%;
+}
+
+/* sticky bozulmasın diye (güvenli) */
+main,
+main .container-fluid,
+main .row {
+    overflow: visible !important;
+}
+
+/* =========================
+   SIDEBAR SLIDER (left/right)
+   ========================= */
+.advert-slot .left-slider,
+.advert-slot .right-slider {
+    width: 100%;
+    height: 100%;
+}
+
+.advert-slot .carousel {
+    border-radius: 16px;
+    overflow: hidden;
+}
+
+.ad-carousel-frame {
+    width: 100%;
+    height: 100%;
+    overflow: hidden;
+}
+
+.ad-carousel-img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    display: block;
+}
+
+/* =======================================================
+   TOP / BOTTOM / FRONT: SABİT ORAN
+   ======================================================= */
+.top-swiper-wrap .swiper,
+.bottom-swiper-wrap .swiper,
+.front-swiper-wrap .swiper {
+    width: 100%;
+}
+
+.top-swiper-wrap .swiper-slide,
+.bottom-swiper-wrap .swiper-slide,
+.front-swiper-wrap .swiper-slide {
+    aspect-ratio: 4 / 3;
+    border-radius: 14px;
+    overflow: hidden;
+    background: rgba(0, 0, 0, 0.04);
+}
+
+@media (min-width: 768px) {
+    .top-swiper-wrap .swiper-slide,
+    .bottom-swiper-wrap .swiper-slide,
+    .front-swiper-wrap .swiper-slide {
+        aspect-ratio: 16 / 9;
+    }
+}
+
+.top-swiper-wrap .swiper-slide img,
+.bottom-swiper-wrap .swiper-slide img,
+.front-swiper-wrap .swiper-slide img {
+    width: 100% !important;
+    height: 100% !important;
+    object-fit: cover !important;
+    display: block;
+}
+
+/* =========================
+   ADMIN BUTTON (theme uyumlu)
+   ========================= */
+.admin-btn {
+    height: 44px;
+    padding: 0 14px;
+    border-radius: 0.85rem;
+
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+
+    border: 1px solid rgba(22, 199, 132, 0.45);
+    background: rgba(22, 199, 132, 0.1);
+    color: var(--bs-body-color);
+
+    backdrop-filter: blur(10px);
+    -webkit-backdrop-filter: blur(10px);
+
+    font-weight: 800;
+    line-height: 1;
+
+    transition:
+        transform 0.15s ease,
+        background-color 0.15s ease,
+        border-color 0.15s ease,
+        box-shadow 0.15s ease;
+}
+
+.admin-btn i {
+    font-size: 1rem;
+    line-height: 1;
+}
+
+@media (hover: hover) and (pointer: fine) {
+    .admin-btn:hover {
+        transform: translateY(-1px);
+        border-color: rgba(22, 199, 132, 0.7);
+        background: rgba(22, 199, 132, 0.16);
+        box-shadow: 0 0 0.9rem rgba(22, 199, 132, 0.14);
+        color: var(--bs-body-color);
+    }
+}
+
+.admin-btn:active {
+    transform: translateY(0);
+}
+
+.admin-btn:focus {
+    outline: 0;
+    box-shadow: var(--focus-ring);
+}
+
+[data-bs-theme="dark"] .admin-btn {
+    border-color: rgba(22, 199, 132, 0.5);
+    background: rgba(22, 199, 132, 0.12);
+}
