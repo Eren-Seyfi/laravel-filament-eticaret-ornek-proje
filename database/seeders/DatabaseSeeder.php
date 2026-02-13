@@ -20,7 +20,7 @@ class DatabaseSeeder extends Seeder
             CategorySeeder::class,
             ProductSeeder::class,
             AdvertSeeder::class,
-            TrackEventSeeder::class,
+                /*  TrackEventSeeder::class, */
             SettingSeeder::class,
         ]);
 
