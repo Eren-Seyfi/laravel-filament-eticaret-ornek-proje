@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "b301043bf0e469a752bd459d2b9e891c",
+    "content-hash": "faebf53ea7d1bbf3bf4618723bdc55fc",
     "packages": [
         {
             "name": "anourvalar/eloquent-serialize",
@@ -1619,6 +1619,71 @@
                 }
             ],
             "time": "2025-12-03T09:33:47+00:00"
+        },
+        {
+            "name": "gecche/laravel-multidomain",
+            "version": "v12.1",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/gecche/laravel-multidomain.git",
+                "reference": "04f9df00f57242378c406f4ffb063c6795342215"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/gecche/laravel-multidomain/zipball/04f9df00f57242378c406f4ffb063c6795342215",
+                "reference": "04f9df00f57242378c406f4ffb063c6795342215",
+                "shasum": ""
+            },
+            "require": {
+                "laravel/framework": "^12.0"
+            },
+            "require-dev": {
+                "codedungeon/phpunit-result-printer": "^0.1.0",
+                "mockery/mockery": "^1.6",
+                "orchestra/testbench": "^10.0",
+                "orchestra/testbench-browser-kit": "^10.0",
+                "phpunit/phpunit": "^11.5"
+            },
+            "type": "library",
+            "extra": {
+                "laravel": {
+                    "providers": [
+                        "Gecche\\Multidomain\\Foundation\\Providers\\DomainConsoleServiceProvider"
+                    ]
+                }
+            },
+            "autoload": {
+                "files": [
+                    "src/Foundation/helpers.php"
+                ],
+                "psr-4": {
+                    "Gecche\\Multidomain\\": "src/"
+                },
+                "classmap": []
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "MIT"
+            ],
+            "authors": [
+                {
+                    "name": "Giacomo Terreni",
+                    "email": "giacomo.terreni@gmail.com"
+                }
+            ],
+            "description": "Laravel App on a subdomains, multi-tenancy setting",
+            "keywords": [
+                "laravel",
+                "multi-tenants",
+                "multidomain",
+                "multitenancy",
+                "subdomains"
+            ],
+            "support": {
+                "issues": "https://github.com/gecche/laravel-multidomain/issues",
+                "source": "https://github.com/gecche/laravel-multidomain/tree/v12.1"
+            },
+            "time": "2025-04-16T15:20:26+00:00"
         },
         {
             "name": "graham-campbell/result-type",
