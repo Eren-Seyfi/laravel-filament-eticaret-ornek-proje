@@ -4,7 +4,6 @@ use Livewire\Component;
 use App\Models\Category;
 
 new class extends Component {
-    public string $viewMode = 'table';
     public $categories;
 
     public bool $onlyHomepage = false;
@@ -13,13 +12,10 @@ new class extends Component {
     public ?int $categoryId = null;
 
     public function mount(
-        string $defaultView = 'table',
         bool $onlyHomepage = false,
         bool $onlyActive = true,
         ?int $categoryId = null,
     ): void {
-        $this->viewMode = in_array($defaultView, ['table', 'cards'], true) ? $defaultView : 'table';
-
         $this->onlyHomepage = $onlyHomepage;
         $this->onlyActive = $onlyActive;
         $this->categoryId = $categoryId;
@@ -53,16 +49,10 @@ new class extends Component {
                     }
 
                     $q->orderBy('sort_order')
-                      ->orderBy('name');
+                        ->orderBy('name');
                 }
             ])
             ->get();
-    }
-
-    public function setViewMode(string $mode): void
-    {
-        if (!in_array($mode, ['table', 'cards'], true)) return;
-        $this->viewMode = $mode;
     }
 };
 ?>
@@ -83,69 +73,10 @@ new class extends Component {
             width: 10px;
             height: 10px;
             border-radius: 999px;
-            background: linear-gradient(
-                135deg,
-                rgb(var(--accent-2-rgb) / 0.95),
-                rgb(var(--accent-rgb) / 0.95)
-            );
+            background: linear-gradient(135deg,
+                    rgb(var(--accent-2-rgb) / 0.95),
+                    rgb(var(--accent-rgb) / 0.95));
             box-shadow: 0 0 0 6px rgb(var(--accent-rgb) / 0.10);
-        }
-
-        /* Toggle = senin chips/offcanvas glass mantığı */
-        .catalog-toggle {
-            border-radius: 999px;
-            padding: .25rem;
-
-            border: 1px solid var(--surface-border);
-            background: var(--surface-bg);
-
-            backdrop-filter: blur(10px);
-            -webkit-backdrop-filter: blur(10px);
-        }
-
-        .catalog-toggle .btn {
-            border-radius: 999px !important;
-            transition:
-                transform .15s ease,
-                box-shadow .15s ease,
-                background-color .15s ease,
-                border-color .15s ease;
-        }
-
-        /* Active (btn-primary) -> accent gradient */
-        .catalog-toggle .btn.btn-primary {
-            border: 0;
-            background: linear-gradient(
-                135deg,
-                rgb(var(--accent-rgb) / 0.95),
-                rgb(var(--accent-2-rgb) / 0.95)
-            );
-            box-shadow: 0 0 0.9rem rgb(var(--accent-2-rgb) / 0.14);
-        }
-
-        /* Inactive -> outline ama “chip” gibi */
-        .catalog-toggle .btn.btn-outline-primary {
-            border-color: transparent;
-            background: transparent;
-        }
-
-        @media (hover:hover) and (pointer:fine) {
-            .catalog-toggle .btn.btn-outline-primary:hover {
-                transform: translateY(-1px);
-                border-color: rgb(var(--accent-2-rgb) / 0.35);
-                background: rgb(var(--accent-2-rgb) / 0.10);
-                box-shadow: 0 0 0.9rem rgb(var(--accent-2-rgb) / 0.12);
-            }
-
-            .catalog-toggle .btn.btn-primary:hover {
-                transform: translateY(-1px);
-                box-shadow: 0 0 1rem rgb(var(--accent-2-rgb) / 0.16);
-            }
-        }
-
-        .catalog-toggle .btn:focus {
-            outline: 0;
-            box-shadow: var(--focus-ring);
         }
 
         /* Empty (theme like) */
@@ -162,11 +93,14 @@ new class extends Component {
 
         /* Mobil */
         @media (max-width: 576px) {
-            .catalog-title-dot { display: none; }
+            .catalog-title-dot {
+                display: none;
+            }
         }
     </style>
 
-    <div class="d-flex flex-column flex-md-row align-items-start align-items-md-center justify-content-between gap-2 mb-3">
+    <div
+        class="d-flex flex-column flex-md-row align-items-start align-items-md-center justify-content-between gap-2 mb-3">
         <div>
             <div class="catalog-title h5 mb-1">
                 <span class="catalog-title-dot" aria-hidden="true"></span>
@@ -190,28 +124,7 @@ new class extends Component {
                 @endif
             </div>
         </div>
-
-        <div class="btn-group catalog-toggle" role="group" aria-label="Görünüm seçimi">
-            <button type="button"
-                class="btn btn-sm {{ $viewMode === 'table' ? 'btn-primary' : 'btn-outline-primary' }}"
-                wire:click="setViewMode('table')"
-                x-on:click="localStorage.setItem('catalog_view_mode','table')">
-                <i class="fa-solid fa-table me-1"></i> Tablo
-            </button>
-
-            <button type="button"
-                class="btn btn-sm {{ $viewMode === 'cards' ? 'btn-primary' : 'btn-outline-primary' }}"
-                wire:click="setViewMode('cards')"
-                x-on:click="localStorage.setItem('catalog_view_mode','cards')">
-                <i class="fa-regular fa-id-card me-1"></i> Kart
-            </button>
-        </div>
     </div>
-
-    <div x-data x-init="
-        const saved = localStorage.getItem('catalog_view_mode');
-        if(saved && saved !== @js($viewMode)) { $wire.setViewMode(saved); }
-    "></div>
 
     @if(empty($categories) || $categories->isEmpty())
         <div class="catalog-empty d-flex align-items-start gap-2">
@@ -222,11 +135,8 @@ new class extends Component {
             </div>
         </div>
     @else
-        @if($viewMode === 'table')
-            <livewire:catalog.items-table :categories="$categories" />
-        @else
-            <livewire:catalog.items-cards :categories="$categories" />
-        @endif
+        {{-- ✅ Sadece kart görünümü --}}
+        <livewire:catalog.items-cards :categories="$categories" />
     @endif
 
 </div>
